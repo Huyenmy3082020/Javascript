@@ -1,0 +1,290 @@
+
+<!-- json :là 1 định dạng dữ liệu 
+//JavaScript Object Notation 
+// json :number,boolean, null, array ,object
+//stringify 
+//parse
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="/Javascrip/app.js">
+  <title>Document</title>
+</head>
+<body>
+    <ul id="comment-block">
+
+    </ul>
+  <script>
+
+
+
+    // Ta có Promise sinh ra để giải quyết vấn đế callback hell
+    // callback hell là gọi lại nhiều lần viết code dài và khó hiêu
+    // chú ý ta có thể then nhiều lần
+    // lúc này khi ta nhận resolve thì then sẽ được thực thi
+    // khi nhận reject thì catch sẽ được thực thi 
+
+  //   var promise = new Promise(function (resolve, reject) 
+  //   {
+  //     resolve();    
+  // });
+  
+  // promise
+  //   .then(function(data) {
+  //     return new Promise(function (resolve) {
+  //       setTimeout(resolve, 3000); // so vs đoạn code của bạn thì phần này bn ko nên truyền dữ liệu data vào vì nếu bạn truyền vào thì nó sẽ in ra kết quả đó ngay lập tức
+  //     });
+  //   })
+  //   .then(function() {
+  //       return promise // sau đó bạn sẽ tạo một then để trả về dữ liệu bn viết ở promise
+  //   })
+
+  //   .then(function (data) {
+  //     console.log(data); // và cuối cùng là nó sẽ nhận lại giá trị mà bn trả vừa r
+  //   })
+  //   .catch()
+  //   .finally();
+  //Trường hợp này in ra 1 < 2 la dung ngay lập tức
+// neu return ve 1 gia tri khong phai ot promise this then dang sau se duoc thuc thi truoc
+// con neu return ve 1 promise thi se doi thenn dang truoc chay xong thi moi den luot then tiep theo
+
+// promise= new Promise()
+// mang 
+// ham 
+// callback
+// promise
+// dom
+// function sleep(ms){
+//     return new Promise(function(resolve){
+//       setTimeout(resolve,ms);
+//     });
+// }
+
+// sleep(1000)
+//           .then(function(){
+//             console.log(1);
+//             return sleep(1000);
+//           })
+//           .then(function(){
+//             console.log(2);
+//             return sleep(1000);
+//           })
+
+///////////////
+// cac ham trong promise
+  //  var promise1 = new Promise(
+  //     function(resolve){
+  //       setTimeout(function(){
+  //         resolve([1]);
+  //       },2000)
+  //     }
+
+  //  )
+  //  var promise2 = new Promise(
+  //     function(resolve){
+  //       setTimeout(function(){
+  //         resolve([2,3]);
+  //       },2000)
+  //     }
+
+  //  )
+  //  Promise.all([promise1,promise2])
+  //  .then(function(result){
+  //           var resul1= result[0];
+  //           var resul2=result[1];
+
+  //          console.log( resul1.concat(resul2))
+  //  })
+  
+
+//   // bai tap ve promise
+//   var users=[
+//       {
+//         id :1,
+//         name :'Ha Tuan'
+//       },   
+//       {
+//         id :2,
+//         name :'Son Dang'
+//       },                 
+//       {
+//         id :3,
+//         name :'Ha An'
+//       },      
+//   ];
+                                  
+
+//   var comments=[
+//     {
+//       id :1,
+//       users_id:1,
+//       content :"Em fan anh anh do mixi"
+//     },
+//     {
+//       id :2,     
+//       users_id:2,      
+//       content :"ok em oi"
+//     },
+//   ]
+//   // lay comment 
+//   //  tu comment lay ra danh users_id 
+//   //  tu user_is lay ra user tuong ung
+
+
+
+//   // fake api
+
+// function getComments(){
+//   return new Promise(function(resolve){
+//     setTimeout(function(){
+//       resolve(comments)
+//     },1000)
+//   })
+// }
+// getComments()
+//       .then(function(comments){
+//         var users_id= comments.map(function(){
+//           // chỉ là lấy ra id của đoạn comment trong danh sách comment. Kết quả lúc này sẽ là 1 2 3
+//           return comments.users_id;
+//         })
+//         return getUserId(users_id)
+//         .then(function(users){
+//           return {
+//             // đoạn này sẽ trả về users và commnet của 2 ông có id là 1 2 
+//             users:users,
+//             comments:comments,
+//           };
+//         })
+// // dữ liệu return của then bên trên sẽ là dữ liệu của then tiếp theo vì thế data của then 2 sẽ là dữ liệu của then1
+// }).then(function(data){
+//       // lấy ra id của thẻ ul
+//       var cm= document.getElementById('comment-block')
+//       data.comments.forEach(comment => {
+//         // tìm kiếm ra những user 
+//         var html='';
+//         var user= data.users.find(function(user){
+//           // tìm ra đuocwj những ôg có id giống vơi user_id
+//           return user.id===comment.id
+//         })
+//         // nối chuỗi với li 
+//         html+=`<li> ${user.name}:${comment.content}<li/>`
+//       });
+//       // cuối cùng là gán text trong thẻ ul = với html 
+//       cm.innerHTML=html;
+// })
+
+
+// // sẽ trả về 1 promise 
+
+// function getUserId(users_id){
+//     return new Promise(function(resolve){
+//       var result= users_id.filter(function(user){
+//         // tim ra những id trùng nhau trên mảng comment và mảng users
+//         return users_id.includes(user.id);
+//       })
+//     setTimeout(function(){
+//       // lúc này sẽ trar về biến kết quả là những id trùg nhau kết quả sẽ là 1 và 2 
+//       resolve(result)
+//     },1000)
+//     })}
+
+
+
+// <!-- 
+// 1.JSon là định dạng dữ liệu(chuỗi) 
+// -   Javascript object notation 
+// -   Stringify / Parse
+ 
+//  -->
+// PROMISE
+
+// pending =>memory leak
+// fullfille
+// reject
+
+var users =[
+      {
+        id :1,
+        name:'Kien Dam ',
+      },
+      {
+        id:2,
+        name :'Ha Tuan'
+      },
+      {
+        id:3,
+        name :'Ha An'
+      }
+]
+var comments=[
+  {
+    id :1,
+    user_id :1,
+    content:'Anh Son chua ra video ',
+  },
+  {
+    id :2,
+    user_id:2,
+    content:'Vua ra xong em oi',
+  }
+]
+
+
+function getComments (){
+    return new Promise(function(resolve){
+      setTimeout(function(){
+        resolve(comments)
+      },1000)
+    })
+}
+
+
+
+function getUserById(user_idS){
+      return new Promise(function(resolve){
+          var result = users.filter(function(user){
+              return user_idS.includes(user.id)
+          })
+
+          setTimeout(function(){
+          resolve(result);
+        },1000)
+      })
+}
+
+getComments()
+  .then(function(comments){
+    // loc ra nhung userid co trong comment 
+       var user_idS = comments.map(function(comment){
+        return comment.user_id;
+       })
+      
+       return getUserById(user_idS)
+          .then(function(users){
+              return users;
+          })      
+ })
+
+
+  .then(function([data]){
+     var commentblock=document.getElementById('comment-block')
+      var html='';
+     data.comment.forEach(function(comment){
+      var user=data.user.find(function(user){
+        return user.id===comment.user_id;
+      })
+      html+=`<li>${user.name}:${comment.content}<li/>`;
+     })
+     commentblock.innerHTML=html;
+  })
+
+
+  </script>
+  <!-- 
+   -->
+</body>
+</html>
+
